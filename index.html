@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background: linear-gradient(to right, rgb(53, 158, 158),rgb(255, 255, 255));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .watch-cont {
+        height: 300px;
+        width: 500px;
+        margin: auto;
+        border: 2px solid rgb(56, 153, 232);
+        border-radius: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, rgb(229, 229, 13),rgb(255, 255, 255));
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+          0 6px 6px rgba(0, 0, 0, 0.23);
+      }
+      .timer-val {
+        width: 80%;
+        height: 30%;
+        border: 2px solid rgb(120, 113, 23);
+        margin: 20px;
+        background: linear-gradient(to right, rgb(62, 232, 39),rgb(44, 214, 132));
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 2px;
+        color: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+          0 6px 6px rgba(0, 0, 0, 0.23);
+      }
+      .controls {
+        width: 80%;
+        height: 10%;
+        border: 2px solid rgb(217, 111, 45);
+        background: linear-gradient(to right, rgb(230, 136, 223),rgb(255, 255, 255));
+        margin: 20px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+          0 6px 6px rgba(0, 0, 0, 0.23);
+      }
+
+      .btn {
+        color: wheat;
+        background-color: rgb(66, 141, 216);
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+        0 6px 6px rgba(0, 0, 0, 0.23);
+        border-radius: 5px;
+      }
+      .btn:hover {
+        scale: 1.2;
+        border: 2px solid white;
+      }
+      .lab {
+        font-size: 48px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="watch-cont">
+      <div class="timer-val">
+        <label class="lab" for="time">00:00:00:00</label>
+      </div>
+      <div class="controls">
+        <button id="st" class="btn">START</button>
+        <button id="stp" class="btn">STOP</button>
+        <button id="rt" class="btn">RESET</button>
+      </div>
+    </div>
+    <script>
+      let st = document.getElementById("st");
+      let stp = document.getElementById("stp");
+      let rt = document.getElementById("rt");
+      let lb = document.getElementsByClassName("lab")[0];
+      let started = false;
+      let mil = 0,
+        sec = 0,
+        min = 0,
+        hr = 0;
+      st.addEventListener("click", () => (started = true));
+      stp.addEventListener("click", () => (started = false));
+      rt.addEventListener("click", () => {
+        started = false;
+        mil = 0;
+        sec = 0;
+        min = 0;
+        hr = 0;
+        lb.innerHTML = `00:00:00:00`;
+      });
+
+      setInterval(() => {
+        if (started) {
+          mil++;
+          if (mil > 99) {
+            mil = 0;
+            sec++;
+          }
+          if (sec > 59) {
+            sec = 0;
+            min++;
+          }
+          if (min > 59) {
+            min = 0;
+            hr++;
+          }
+          if (hr < 10) {
+            if (min < 10) {
+              if (sec < 10) {
+                if (mil < 10) {
+                  lb.innerHTML = `0${hr}:0${min}:0${sec}:0${mil}`;
+                } else {
+                  lb.innerHTML = `0${hr}:0${min}:0${sec}:${mil}`;
+                }
+              } else {
+                lb.innerHTML = `0${hr}:0${min}:${sec}:${mil}`;
+              }
+            } else {
+              lb.innerHTML=`0${hr}:${min}:${sec}:${mil}`;
+            }
+          } else {
+            lb.innerHTML = `${hr}:${min}:${sec}`;
+          }
+        }
+      }, 10);
+    </script>
+  </body>
+</html>
